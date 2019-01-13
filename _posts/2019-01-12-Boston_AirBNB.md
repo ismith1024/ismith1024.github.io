@@ -1,9 +1,7 @@
 ---
 layout: post
-title: Entertainment Venues: how they affect your AirBNB
+title: Entertainment Venues - how they affect your AirBNB
 ---
-
-
 
 ![_config.yml]({{ site.baseurl }}/images/config.png)
 
