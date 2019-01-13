@@ -5,7 +5,7 @@ title: Entertainment Venues, and how they affect Your AirBNB
 
 
 
-![_config.yml]({{ site.baseurl }}/images/config.png)
+<!--- ![_config.yml]({{ site.baseurl }}/images/config.png) -->
 
 
 
@@ -68,7 +68,6 @@ As a takeaway then, we can draw three immediate conclusions:
  - The AirBNBs closer to an event aren't noticeably busier than anywhere else in the city.  Customers appear to be happy to use trnasportation to get to their events
  - Customers who used AirBNBs close to (within 5k) an event were less satisfied than average in their AirBNB experience.
  - AirBNB operators seem to be discounting their rates.
+<!--- % Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
 
-% Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
-
-The easiest way to make your first post is to edit this one. Go into /_posts/ and update the Hello World markdown file. For more instructions head over to the [Jekyll Now repository](https://github.com/barryclark/jekyll-now) on GitHub.%
+The easiest way to make your first post is to edit this one. Go into /_posts/ and update the Hello World markdown file. For more instructions head over to the [Jekyll Now repository](https://github.com/barryclark/jekyll-now) on GitHub.% -->
