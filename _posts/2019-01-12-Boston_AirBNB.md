@@ -5,7 +5,7 @@ title: Entertainment Venues, and how they affect Your AirBNB
 
 
 
-<!--- ![_config.yml]({{ site.baseurl }}/images/config.png) -->
+![_config.yml]({{ site.baseurl }}/images/config.png)
 
 
 
@@ -49,9 +49,9 @@ Customer numbers are also based on the assumption that reviews are received with
 
 Despite being close to an event venue, AirBNB customers were less satisfied than usual within a 5k or so radius:
 
+![Customer review anomaly](https://ismith1024.github.com/images/boston_marathon-sentiment_anomaly.png)
 
-
-
+In the attached image, red points are the locations of reviews, with a red point indicating more nagative than seasonal average.
 
 ### 4.  Average Price vs. Distance to the Event
 This was the most surprising - when averaged across all of Boston, prices did not change much during the week of an entertainment event.  However, this change did vary with the distance to the event:
