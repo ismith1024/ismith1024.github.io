@@ -65,15 +65,21 @@ In the above image (this one corresponding to the Boston Marathon), red points a
 
 The trend for all events I examined can be seen below:
 ![Customer review anomaly, all](https://ismith1024.github.io/images/sent_by_distance.png)
-*Fig xx: Customer satisfaction by distance (red scale = negative)*
+*Fig xx: Customer satisfaction anomaly by distance*
+
+The negative trend flattens out after 5 km.
 
 
 ### 4.  Average Price vs. Distance to the Event
-This was the most surprising - when averaged across all of Boston, prices did not change much during the week of an entertainment event.  However, this change did vary with the distance to the event:
+An initial inspection of price as a function of distance to events showed counterintuitively that prices were lower closer to the event venue.  
+![Price anomaly, all](https://ismith1024.github.io/images/price_dist_wrong.png)
+*Fig xx: Price anomaly by distance*
 
-<Fig>
+On closer inspection, it became clear that the results were skewed - condos have a lower list price than houses, and my entertainment events were held in neighborhoods with a higher density of condos!  This demonstrates an important point, that data analysis requires an understanding of the business domain.
 
-
+Once I corrected for the neighborhood composition, the actual trend stands out.  Here is the example for prices during the World Series:
+![Price anomaly, world series](https://ismith1024.github.io/images/price_map.png)
+*Fig xx: Price anomaly mpa, World Series*
 
 
 ### 5.  Findings
