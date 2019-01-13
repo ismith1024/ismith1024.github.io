@@ -39,7 +39,8 @@ Figures like number of customers are based on number of reviews.  Using "Some Gu
 
 Customer numbers are also based on the assumption that reviews are received within one week of the booking date.  By considering reviews over a one-week period, this also removes bias based on days of the week.  Finally, customer numbers are also adjusted for seasonal variation.  As you can see, business varies a lot over the year:
 
-<Fig 1>
+![Seasonal business](https://ismith1024.github.io/images/seasonal_business.png)
+*Fig xx: Seasonal business by month (number of reviews)*
  
 ### 2.  Customer Numbers vs. Distance to the Event
 
