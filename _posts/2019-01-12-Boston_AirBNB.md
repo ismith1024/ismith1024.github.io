@@ -50,6 +50,7 @@ Customer numbers are also based on the assumption that reviews are received with
 Despite being close to an event venue, AirBNB customers were less satisfied than usual within a 5k or so radius:
 
 ![Customer review anomaly](https://ismith1024.github.io/images/boston_marathon_sentiment_anomaly.png)
+*Fig xx: Customer satisfaction anomaly (red scale = negative)*
 
 In the attached image, red points are the locations of reviews, with a red point indicating more nagative than seasonal average.
 
