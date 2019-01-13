@@ -64,7 +64,7 @@ Despite being close to an event venue, AirBNB customers were less satisfied than
 In the above image (this one corresponding to the Boston Marathon), red points are the locations of reviews, with a red point indicating more nagative than seasonal average.
 
 The trend for all events I examined can be seen below:
-![Customer review anomaly, all](https://ismith1024.github.io/images/sentiment_by_distance.png)
+![Customer review anomaly, all](https://ismith1024.github.io/images/sent_by_distance.png)
 *Fig xx: Customer satisfaction by distance (red scale = negative)*
 
 
