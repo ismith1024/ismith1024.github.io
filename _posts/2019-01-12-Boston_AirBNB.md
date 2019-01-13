@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Entertainment Venues, and how they affect Your AirBNB
+title: Entertainment Venues: how they affect your AirBNB
 ---
 
 
@@ -40,7 +40,7 @@ Figures like number of customers are based on number of reviews.  Using "Some Gu
 Customer numbers are also based on the assumption that reviews are received within one week of the booking date.  By considering reviews over a one-week period, this also removes bias based on days of the week.  Finally, customer numbers are also adjusted for seasonal variation.  As you can see, business varies a lot over the year:
 
 ![Seasonal business](https://ismith1024.github.io/images/seasonal_guests.png)
-*Fig xx: Seasonal business by month (number of reviews)*
+*Fig 1: Seasonal business by month (number of reviews)*
  
 ### 2.  Customer Numbers vs. Distance to the Event
 
@@ -48,7 +48,7 @@ First, I examined the number of AirBNB customer reviewss in the Boston area with
 
 I next examined the increase in business as a function of distance from the venue.
 ![Business by distance](https://ismith1024.github.io/images/guests_by_distance.png)
-*Fig xx: Business by distance (number of reviews)*
+*Fig 2: Business by distance (number of reviews)*
 
 Intuitively, I expected there to be some variation in business increase, reflecting more guiests closer to the event venue.  However, the data did not support this hypothesis.  
 
@@ -59,13 +59,13 @@ From the perspective of an AirBNB operator, this would be encouraging: AirBNBs i
 Despite being close to an event venue, AirBNB customers were less satisfied than usual within approximately 5 km:
 
 ![Customer review anomaly](https://ismith1024.github.io/images/boston_marathon_sentiment_anomaly.png)
-*Fig xx: Customer satisfaction anomaly (red scale = negative)*
+*Fig 3: Customer satisfaction anomaly (red scale = negative)*
 
 In the above image (this one corresponding to the Boston Marathon), red points are the locations of reviews, with a red point indicating more nagative than seasonal average.
 
 The trend for all events I examined can be seen below:
 ![Customer review anomaly, all](https://ismith1024.github.io/images/sent_by_distance.png)
-*Fig xx: Customer satisfaction anomaly by distance*
+*Fig 4: Customer satisfaction anomaly by distance*
 
 The negative trend flattens out after 5 km.
 
@@ -73,13 +73,13 @@ The negative trend flattens out after 5 km.
 ### 4.  Average Price vs. Distance to the Event
 An initial inspection of price as a function of distance to events showed counterintuitively that prices were lower closer to the event venue.  
 ![Price anomaly, all](https://ismith1024.github.io/images/price_dist_wrong.png)
-*Fig xx: Price anomaly by distance*
+*Fig 5: Price anomaly by distance*
 
 On closer inspection, it became clear that the results were skewed - condos have a lower list price than houses, and my entertainment events were held in neighborhoods with a higher density of condos!  This demonstrates an important point, that data analysis requires an understanding of the business domain.
 
 Once I corrected for the neighborhood composition, the actual trend stands out.  Here is the example for prices during the World Series:
 ![Price anomaly, world series](https://ismith1024.github.io/images/price_map.png)
-*Fig xx: Price anomaly map, World Series (blue scale = higher price)*
+*Fig 6: Price anomaly map, World Series (blue scale = higher price)*
 
 
 ### 5.  Findings
@@ -88,7 +88,7 @@ As a takeaway then, we can draw three immediate conclusions:
  - As expected, AirBNBs are busier around the date of a major event.  Customers are using the service to stay when attending.
  - The AirBNBs closer to an event aren't noticeably busier than anywhere else in the city.  Customers appear to be happy to use trnasportation to get to their events
  - AirBNB operators aren't afraid to increase their rates
- - Customers who used AirBNBs close to (within 5k) an event were less satisfied than average in their AirBNB experience.
+ - Customers who used AirBNBs close to (within 5 km) an event were less satisfied than average in their AirBNB experience.
 
 From the perspective of an AirBNB operator, the data predicts that business will pick up when there is a large event ocurring in the city where you are located, and that suburban operators are in general not increasing prices to take advantage of this.  There is a business opportunity to increase revenue.
 
