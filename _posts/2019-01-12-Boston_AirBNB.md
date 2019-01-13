@@ -50,22 +50,30 @@ I next examined the increase in business as a function of distance from the venu
 ![Business by distance](https://ismith1024.github.io/images/guests_by_distance.png)
 *Fig xx: Business by distance (number of reviews)*
 
+Intuitively, I expected there to be some variation in business increase, reflecting more guiests closer to the event venue.  However, the data did not support this hypothesis.  
+
+From the perspective of an AirBNB operator, this would be encouraging: AirBNBs in the suburbs stand to benefit as much as those downtown.  For this market, guests attending large events are clearly willing to use transporation to get there.
 
 ### 3.  Customer Satisfaction vs. Distance to the Event
 
-Despite being close to an event venue, AirBNB customers were less satisfied than usual within a 5k or so radius:
+Despite being close to an event venue, AirBNB customers were less satisfied than usual within approximately 5 km:
 
 ![Customer review anomaly](https://ismith1024.github.io/images/boston_marathon_sentiment_anomaly.png)
 *Fig xx: Customer satisfaction anomaly (red scale = negative)*
 
-In the attached image, red points are the locations of reviews, with a red point indicating more nagative than seasonal average.
+In the above image (this one corresponding to the Boston Marathon), red points are the locations of reviews, with a red point indicating more nagative than seasonal average.
+
+The trend for all events I examined can be seen below:
+![Customer review anomaly, all](https://ismith1024.github.io/images/sentiment_by_distance.png)
+*Fig xx: Customer satisfaction by distance (red scale = negative)*
+
 
 ### 4.  Average Price vs. Distance to the Event
 This was the most surprising - when averaged across all of Boston, prices did not change much during the week of an entertainment event.  However, this change did vary with the distance to the event:
 
 <Fig>
 
-AirBNB operators seem to be discounting prices when an event is nearby.  I don't know why this is.
+
 
 
 ### 5.  Findings
