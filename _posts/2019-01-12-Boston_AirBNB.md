@@ -79,7 +79,7 @@ On closer inspection, it became clear that the results were skewed - condos have
 
 Once I corrected for the neighborhood composition, the actual trend stands out.  Here is the example for prices during the World Series:
 ![Price anomaly, world series](https://ismith1024.github.io/images/price_map.png)
-*Fig xx: Price anomaly mpa, World Series*
+*Fig xx: Price anomaly map, World Series (blue scale = higher price)*
 
 
 ### 5.  Findings
@@ -87,8 +87,13 @@ As a takeaway then, we can draw three immediate conclusions:
 
  - As expected, AirBNBs are busier around the date of a major event.  Customers are using the service to stay when attending.
  - The AirBNBs closer to an event aren't noticeably busier than anywhere else in the city.  Customers appear to be happy to use trnasportation to get to their events
+ - AirBNB operators aren't afraid to increase their rates
  - Customers who used AirBNBs close to (within 5k) an event were less satisfied than average in their AirBNB experience.
- - AirBNB operators seem to be discounting their rates.
+
+From the perspective of an AirBNB operator, the data predicts that business will pick up when there is a large event ocurring in the city where you are located, and that suburban operators are in general not increasing prices to take advantage of this.  There is a business opportunity to increase revenue.
+
+From the perspective of somebody who is travelling to attend one of these events, AirBNBs are an attractive option to stay at.  Be prepared for higher prices, and take note that guests are less happy when staying close to their event.  You might be happier staying a little further away at either a better price.  (Now, if only we had Uber data to check transortation usage...)
+
 <!--- % Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
 
 The easiest way to make your first post is to edit this one. Go into /_posts/ and update the Hello World markdown file. For more instructions head over to the [Jekyll Now repository](https://github.com/barryclark/jekyll-now) on GitHub.% -->
