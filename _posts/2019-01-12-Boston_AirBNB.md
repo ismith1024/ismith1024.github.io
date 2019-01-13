@@ -39,7 +39,7 @@ Figures like number of customers are based on number of reviews.  Using "Some Gu
 
 Customer numbers are also based on the assumption that reviews are received within one week of the booking date.  By considering reviews over a one-week period, this also removes bias based on days of the week.  Finally, customer numbers are also adjusted for seasonal variation.  As you can see, business varies a lot over the year:
 
-![Seasonal business](https://ismith1024.github.io/images/seasonal_business.png)
+![Seasonal business](https://ismith1024.github.io/images/seasonal_guests.png)
 *Fig xx: Seasonal business by month (number of reviews)*
  
 ### 2.  Customer Numbers vs. Distance to the Event
@@ -47,7 +47,7 @@ Customer numbers are also based on the assumption that reviews are received with
 First, I examined the number of AirBNB customer reviewss in the Boston area within one week after one of the entertainment events, versus the average value over the time of year.  There were noticeable increases.  The effects of the World Series and Boston Marathon were most pronounced, with 51% and 23% increases, respectively, in the number of reviews versus the three-month window of the event.  The U2 concerts had a +8% anomaly, while the Pink concerts had a -9% anomaly.  However, the Pink concert may have been distorted by the effects of the Boston Marathon, held one week later.
 
 I next examined the increase in business as a function of distance from the venue.
-![Business by distance](https://ismith1024.github.io/images/business_by_distance.png)
+![Business by distance](https://ismith1024.github.io/images/guests_by_distance.png)
 *Fig xx: Business by distance (number of reviews)*
 
 
