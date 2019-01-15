@@ -37,7 +37,7 @@ Customer numbers are also based on the assumption that reviews are received with
 
 *Fig 1: Seasonal business by month (number of reviews)*
  
-### 2.  Customer Numbers vs. Distance to the Event
+### 2.  How does proximity to a large event impact number of customers?
 
 First, I examined the number of AirBNB customer reviewss in the Boston area within one week after one of the entertainment events, versus the average value over the time of year.  There were noticeable increases.  The effects of the World Series and Boston Marathon were most pronounced, with 51% and 23% increases, respectively, in the number of reviews versus the three-month window of the event.  The U2 concerts had a +8% anomaly, while the Pink concerts had a -9% anomaly.  However, the Pink concert may have been distorted by the effects of the Boston Marathon, held one week later.
 
@@ -49,7 +49,7 @@ Intuitively, I expected there to be some variation in business increase, reflect
 
 From the perspective of an AirBNB operator, this would be encouraging: AirBNBs in the suburbs stand to benefit as much as those downtown.  For this market, guests attending large events are clearly willing to use transporation to get there.
 
-### 3.  Customer Satisfaction vs. Distance to the Event
+### 3.  How happy are AirBNB customers who stayed close to the event?
 
 Despite being close to an event venue, AirBNB customers were less satisfied than usual within approximately 5 km:
 
@@ -65,7 +65,7 @@ The trend for all events I examined can be seen below:
 The negative trend flattens out after 5 km.
 
 
-### 4.  Average Price vs. Distance to the Event
+### 4.  How does proximity to a large event impact prices being asked by AirBNB operators?
 An initial inspection of price as a function of distance to events showed counterintuitively that prices were lower closer to the event venue.  
 ![Price anomaly, all](https://ismith1024.github.io/images/price_dist_wrong.png)
 *Fig 5: Price anomaly by distance*
