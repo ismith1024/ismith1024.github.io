@@ -38,6 +38,12 @@ The data set is deceptively simple.  It contains three csv files with a minimal 
 
 ... unknown age is encoded as 118 years old
 
+| Male  | Female  | Other  | No Response  |
+|---|---|---|---|
+| 8484  | 6129  | 212  | 2175 |
+
+*Fig x: Raw gender data*
+
 
 ... gender contains null values, in addition any user who does not identify as male or female is tagged as "other".
 
@@ -115,3 +121,5 @@ I could improve the experiment by:
 - Considering the offer received.  I dismissed this value early on, but given more time to complete the exercise, the next thing I would have added would be a binary attribute "offer received" to the learner.
 
 
+References
+[1] Davidson-Pilon, Cameron "Bayesian Methods for Hackers", 2019, online, available: https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers
