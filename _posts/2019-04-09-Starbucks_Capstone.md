@@ -9,7 +9,7 @@ title: Starbucks Capstone Challenge
 
 The project represents a simulation of the bahavior users of Starbucks' mobile app over a period of time in which users are sent promotional offers.  The promotional offers fall into one of three types: buy-one-get-one-free ('BOGO'), informational, and discount.  The parameters of each offer vary (some are valid for longer than others, some provide a greater reward), and the offers are made by way of different marketing channels – some combination of web, mobile, social, and email.  However, there are only ten variations of these offers in total.
 
-The objective of the exercise is quite open-ended.  My implementation is based on a high-level observation of the data and business doman (marketing):
+The possible objectives of the exercise is quite open-ended.  My implementation is based on a high-level observation of the data and business doman (marketing):
 
 - Although two events occur in sequence, it is not possible to claim that they are dependent on each other (no causality).  A customer might but the same latte every mornging, regardless of whether he or she was given a BOGO offer by email
 - The outcome of an offer is not repeatable (no determinism).  A customer might get the same discount on two separate days, but just not feel like a coffee on one of those days.
@@ -32,10 +32,18 @@ The data set is deceptively simple.  It contains three csv files with a minimal 
 #### Profile
 "Profile" contains the information on the simulated users.  There are 17000 users in total.  A user is defined by four demographics: age, gender, income, and membership date.  Data is not necessarily complete...
 
+![placeholder_1](https://ismith1024.github.io/images/age_raw.png)
+
+*Fig x: Raw user age data*
+
 ... unknown age is encoded as 118 years old
 
 
 ... gender contains null values, in addition any user who does not identify as male or female is tagged as "other".
+
+![placeholder_1](https://ismith1024.github.io/images/age_raw.png)
+
+*Fig x: Raw user age data*
 
 ... income contains null values.
 
@@ -52,25 +60,26 @@ I evaluated these missing data points both by way of imputing missing values, an
 
 ## Implementation
 
-I initally evaluated Bayesian statistics, specifically _____, to determine the effect of a single offer event on a time series of transactions by a user.  This is descibed in the excellent e-book, "Bayesian Statistics for Hackers" by ____.  In effect, given a noisy time series, the ____ detects if the time series transitions from one steady state to another, and provides an estimate for when that event occurred.
+I initally evaluated Bayesian statistics, specifically Markov Chain Monte Carlo (MCMC), to determine the effect of a single offer event on a time series of transactions by a user.  This is descibed in the excellent e-book, " Bayesian Methods for Hackers" by Cameron Davidson-Pilon[1].  In effect, given a noisy time series, the MCMC detects if the time series transitions from one steady state to another, and provides an estimate for when that event occurred.
 
 There were some early results that looked promising...
 
 ![placeholder_1](https://ismith1024.github.io/images/SBUX_placeholder.png)
 
-*Fig 1: Placeholder Image*
+*Fig x: Placeholder Image*
 
 ... but, on reflection I found that this application was not quire suited for a couple of reasons.
-1.  The Bayesian ___ assumes a transition between two steady states.  Looking at the transactions over time (the spikes are offers), steady-state is not a good characterition fo the time series.  If anyhting, the time series should be mathermatically modelled as an impulse response with corresponding exponential decay.
-...
+1.  The MCMC assumes a prior distribution, posterior distribution, and transition between two steady states.  Looking at the transactions over time (the spikes are offers), steady-state is not a good characterition fo the time series.  If anything, the time series should be mathematically modelled as an impulse response with corresponding exponential decay.
 
-...
+![placeholder_1](https://ismith1024.github.io/images/transaction_times.png)
 
-2.  The Bayesian ____ is intended to detect the event.  For the starbucks problem, the time of the event is known with certainty.
+*Fig x: Transcript events*
 
-3.  The Bayesian ____ perfoms best at digging a signal out of a noisy environemnt.  The aggregated Starbucks transaction time series is quite clean.
+2.  MCMC is intended to detect the event.  For the starbucks problem, the time of the event is known with certainty.
 
-4. The Bayesian____ assumes two distinct periods of time, an internal A and B.  I have an internal A and B, but A is not in acontiguous time block.  This is discussed in the preprocessing step  on the no-ffer intervals.
+3.  MCMC perfoms best at digging a signal out of a noisy environemnt.  The aggregated Starbucks transaction time series is quite clean.
+
+4. The MCMC assumes two distinct periods of time, an internal A and B.  I have an internal A and B, but A is not in a contiguous time block.  This is discussed in the preprocessing step  on the no-ffer intervals.
 
 ## Statistics
 
