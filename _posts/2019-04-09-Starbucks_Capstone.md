@@ -38,9 +38,9 @@ The data set is deceptively simple.  It contains three csv files with a minimal 
 
 ... unknown age is encoded as 118 years old
 
-| Male  | Female  | Other  | No Response  |
-|---|---|---|---|
-| 8484  | 6129  | 212  | 2175 |
+ Male  | Female  | Other  | No Response
+---|---|---|---
+ 8484  | 6129  | 212  | 2175
 
 *Fig x: Raw gender data*
 
@@ -104,6 +104,11 @@ I evaluated both RandomForestRegressor and AdaboostRegressor learners, but the L
 After establishing the regression algorithm, I added offer reward, offer difficulty, and then offer channels to the dataframe.  None of these columns had a material effect on the performance of the regressoon model, which suggests to me that the inofrmation contained in these data fields does not contribute information to the system.
 
 Finally, I observed that membership year has a non-linear correlation to average transaction value.  Users who joined in 2015 and 2016 spent noticeably more per visit than users who jioned in 2013 and 2018.  I thought of using a non-linear statistical model, but instead one-hot encoded membership year and re-ran the regressor.  The result was in improvement in average transaction vlaue with a trade-off in perfomance of trnasaction rate.  If Starbucks were interested in using htiese regresors, they may wish to consider encoding membership year separately for the separate y-values.
+
+ Table of Results | Values
+ --- | ---
+ 1 | 1
+
 
 ## Results
 
