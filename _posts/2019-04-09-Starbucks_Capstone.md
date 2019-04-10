@@ -47,9 +47,9 @@ The data set is deceptively simple.  It contains three JSON files with a minimal
 
 ... gender contains null values, in addition any user who does not identify as male or female is tagged as "other".
 
-![placeholder_1](https://ismith1024.github.io/images/age_raw.png)
+![placeholder_1](https://ismith1024.github.io/images/income_raw.png)
 
-*Fig x: Raw user age data*
+*Fig x: Raw user income data*
 
 ... income contains null values.
 
@@ -133,6 +133,53 @@ I segemnted each demographic, into logical bins, and then determined the transac
 |`No offer mean: 0.005528949447740996`|
 
 *Fig x: Example histogram - BOGO response, Transaction Rate, All Users*
+
+The table of findings is too long to be placed inline, but see the appendix to this post for full details.  Notable heuristics are described as follows:
+
+### Gender
+
+Male users increased transaction frequency as a result of BOGO offers more than Females or Others. However, Female users spent more per transaction than Males or Others as a result of BOGO offers. 
+
+![placeholder_1](https://ismith1024.github.io/images/bogo_tr_f.png)
+
+|`Transaction rate, F, bogo_1: 0.005634396680460089`|
+|`Transaction rate, F, bogo_2: 0.005967105624692851`|
+|`Transaction rate, F, bogo_3: 0.004872737441403873`|
+|`Transaction rate, F, bogo_4: 0.005495675598034395`|
+|`Transaction rate, F, no offer: 0.005353211806736789`|
+
+![placeholder_1](https://ismith1024.github.io/images/bogo_tr_m.png)
+
+|`Transaction rate, M, bogo_1: 0.007023452187142654`|
+|`Transaction rate, M, bogo_2: 0.007413135538135507`|
+|`Transaction rate, M, bogo_3: 0.005742155732552141`|
+|`Transaction rate, M, bogo_4: 0.006478328238981917`|
+|`Transaction rate, M, no offer: 0.005654761369088241`|
+
+*Fig x: Male-Female discrepancy, transaction rates*
+
+![placeholder_1](https://ismith1024.github.io/images/bogo_av_f.png)
+
+|`Avg Transaction Value, F, bogo_1: 16.14544573773763`|
+|`Avg Transaction Value, F, bogo_2: 15.48664369783282`|
+|`Avg Transaction Value, F, bogo_3: 15.391220785472074`|
+|`Avg Transaction Value, F, bogo_4: 15.621003896637408`|
+|`Avg Transaction Value, F, no offer: 10.09996565897642`|
+
+![placeholder_1](https://ismith1024.github.io/images/bogo_av_m.png)
+
+|`Avg Transaction Value, M, bogo_1: 10.85762602097162`|
+|`Avg Transaction Value, M, bogo_2: 10.518503135232647`|
+|`Avg Transaction Value, M, bogo_3: 9.903239324149101`|
+|`Avg Transaction Value, M, bogo_4: 9.863846278041088`|
+|`Avg Transaction Value, M, no offer: 7.4150608793248445`|
+
+*Fig x: Male-Female discrepancy, average transaction values*
+
+
+A slight decrease in transaction rate was recorded for Females as a result of Discount offers, compared to a slight increase for Males and Others. Discounts increased average transaction value significantly more for Females and Others than Males.
+
+
 
 ## Refinement 
 
