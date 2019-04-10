@@ -27,7 +27,7 @@ I have found that both changes can be described fairly well, and predicted to so
 
 ## Analysis
 
-The data set is deceptively simple.  It contains three csv files with a minimal number of columns.
+The data set is deceptively simple.  It contains three JSON files with a minimal number of fields.
 
 #### Profile
 "Profile" contains the information on the simulated users.  There are 17000 users in total.  A user is defined by four demographics: age, gender, income, and membership date.  Data is not necessarily complete...
@@ -57,12 +57,39 @@ I evaluated these missing data points both by way of imputing missing values, an
 
 #### Portfolio
 
+Portfolio is a straightforward record of all ten offers, contianing a hex id string, list of channels, difficulty, duration, reward, and offer type (one of 'bogo', 'informational', or 'discount')
 
 #### Transcript
+
+Transcript contains the time series data for all events - offer received, offer viewed, transaction, and offer completed.  The JSON objects did not lend themselves to creating a dataframe directly as not every event had the same characteristics. I built a series of functions to inspect a JSON object and place the relevant characteristics in a suitable column (for exampl, 'transaction amount').  Columns with no applicable value were encoded as -1.
 
 ## Methodology
 
 ## Preprocessing
+
+A significant amount of data-wrangling work was necessary to transform the transcript time-series data into a table of the form | User Demographics | Offer Parameters | Change in Transaction Rate | Change in Average Transaction Value|. This required me to determine what offers each user had received, what is their duration, and what intervals of the experiment did not fall within any offer period. Once the offer periods and no-offer periods were determined, transactions and their values were used to evaluate trnasaction rates and values by offer or no-offer interval.
+
+The profile data is missing significant sections of demographic data, and I have evaluated the impact of imputing missing values vs. omitting incomplete records.  The regression learner performed better when missing values were omitted.
+
+I parsed the date string into a datetime object to enable processing.
+
+As described previously, the Transcript file required a series of functions to be applied to the rows in oirder ot manipulate its values into a table with the following structure: 
+
+As it turned out, the offers were all received within one of seven time slots:
+
+![placeholder_1](https://ismith1024.github.io/images/offer_periods.png)
+
+*Fig x: Offers Recevied Time Slots*
+
+#### Transaction Record Preprocessing
+
+A central part of the analysis is the concept of an offer interval.  For each user, I want to know: 
+ - When an offer is made, how many transactions take place over the duration of the offer? 
+ - What is the value of these offers?
+ - How often does the user make transactions when no offer is in efffect?
+ - What is the value of these offers?
+
+By segmenting the offers, I was able to establish an A and B case for each user, and by aggregating, for each demographic segment.  
 
 ## Implementation
 
@@ -87,10 +114,25 @@ There were some early results that looked promising...
 
 4. The MCMC assumes two distinct periods of time, an internal A and B.  I have an internal A and B, but A is not in a contiguous time block.  This is discussed in the preprocessing step  on the no-ffer intervals.
 
+-------
+
+I segmented each user demographic into groups which would make sense to the Starbucks marketing team (for example, "users aged 20-30", users with income 50k-60k", "Female users"). For each user demographic, I generated a histogram showing the distribution of change in transaction rate and value, as well as recording their mean values in a master table.
+
+These mean values, as well as demographic data and offer parameters, we used to train a Linear Regression learner.
+
 ## Statistics
 
 I segemnted each demographic, into logical bins, and then determined the transaction rate and value for each offer.  Next, I determined the transaction rate and average vlaue for periods where no offer was valid for the same set of customers.  These two interval periods became my A and B groups.  I plottted a series of historgrams, and colected the A/B ratios in a matrix.
 
+![placeholder_1](https://ismith1024.github.io/images/bogo_all_users.png)
+
+`BOGO 1 mean: 0.006450805435910441`
+`BOGO 2 mean: 0.006798231448249598`
+`BOGO 3 mean: 0.005380281062973571`
+`BOGO 4 mean: 0.006058094776529127`
+`No offer mean: 0.005528949447740996`
+
+*Fig x: Example histogram - BOGO response, Transaction Rate, All Users*
 
 ## Refinement 
 
@@ -105,14 +147,14 @@ After establishing the regression algorithm, I added offer reward, offer difficu
 
 Finally, I observed that membership year has a non-linear correlation to average transaction value.  Users who joined in 2015 and 2016 spent noticeably more per visit than users who jioned in 2013 and 2018.  I thought of using a non-linear statistical model, but instead one-hot encoded membership year and re-ran the regressor.  The result was in improvement in average transaction vlaue with a trade-off in perfomance of trnasaction rate.  If Starbucks were interested in using htiese regresors, they may wish to consider encoding membership year separately for the separate y-values.
 
- Table of Results | Values
- --- | ---
- 1 | 1
+
 
 
 ## Results
 
 ## Model evaluation and Validation
+
+
 
 ## Justification
 
