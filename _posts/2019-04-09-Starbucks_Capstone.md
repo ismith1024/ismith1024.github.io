@@ -124,7 +124,7 @@ These mean values, as well as demographic data and offer parameters, we used to 
 
 I segemnted each demographic, into logical bins, and then determined the transaction rate and value for each offer.  Next, I determined the transaction rate and average vlaue for periods where no offer was valid for the same set of customers.  These two interval periods became my A and B groups.  I plottted a series of historgrams, and colected the A/B ratios in a matrix.
 
-![placeholder_1](https://ismith1024.github.io/images/bogo_all_users.png)
+![placeholder_1](https://ismith1024.github.io/images/bogo_all_user.png)
 
 |`BOGO 1 mean: 0.006450805435910441`|
 |`BOGO 2 mean: 0.006798231448249598`|
