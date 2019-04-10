@@ -126,11 +126,11 @@ I segemnted each demographic, into logical bins, and then determined the transac
 
 ![placeholder_1](https://ismith1024.github.io/images/bogo_all_users.png)
 
-`BOGO 1 mean: 0.006450805435910441`
-`BOGO 2 mean: 0.006798231448249598`
-`BOGO 3 mean: 0.005380281062973571`
-`BOGO 4 mean: 0.006058094776529127`
-`No offer mean: 0.005528949447740996`
+|`BOGO 1 mean: 0.006450805435910441`|
+|`BOGO 2 mean: 0.006798231448249598`|
+|`BOGO 3 mean: 0.005380281062973571`|
+|`BOGO 4 mean: 0.006058094776529127`|
+|`No offer mean: 0.005528949447740996`|
 
 *Fig x: Example histogram - BOGO response, Transaction Rate, All Users*
 
