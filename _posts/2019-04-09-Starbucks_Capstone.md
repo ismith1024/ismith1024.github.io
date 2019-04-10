@@ -138,7 +138,7 @@ The table of findings is too long to be placed inline, but see the appendix to t
 
 ### Gender
 
-Male users increased transaction frequency as a result of BOGO offers more than Females or Others. However, Female users spent more per transaction than Males or Others as a result of BOGO offers. 
+Male users increased transaction frequency as a result of BOGO and discount offers more than Females or Others. However, Female users spent more per transaction than Males or Others as a result of BOGO or discount offers.  The BOGO plots are shown. 
 
 ![placeholder_1](https://ismith1024.github.io/images/bogo_tr_f.png)
 
@@ -179,6 +179,34 @@ Male users increased transaction frequency as a result of BOGO offers more than 
 
 A slight decrease in transaction rate was recorded for Females as a result of Discount offers, compared to a slight increase for Males and Others. Discounts increased average transaction value significantly more for Females and Others than Males.
 
+#### Membership date
+
+A non-linear trend was apparent which depended on the data a member joined.  The newest and oldest memberships (those joining in 2013 or 2018) showed the least responsiveness to offers in terms of average transaction value.  The custoemrs who spent the most in response to an offer were those who joined in 2015-2016.
+
+ Membership Date | bogo_1  | bogo_2  | bogo_3  | bogo_4 | discount_1  | discount_2  | discount_3  | discount_4
+---|---|---|---|---|---|---|---
+1.0289128217 | 1.3108907323 | 1.1004880489 | 1.0051803556 | 1.2970263108 | 1.3441169459 | 1.4216113414 | 1.3486408789
+1.3613533339 | 1.2131313491 | 1.3138951131 | 1.5422741782 | 1.5535381775 | 1.400929061 | 1.53353075 | 1.7482361107
+1.8607760224 | 1.789786318 | 1.9200245803 | 1.5945606834 | 1.6768473232 | 1.6013653731 | 1.7543372449 | 1.7783641652
+1.7026097382 | 1.8055138487 | 1.6188923012 | 1.6029436568 | 1.835628979 | 1.729043692 | 1.8618566462 | 1.7267409361
+1.4646361715 | 1.3936461882 | 1.3511012608 | 1.4652818338 | 1.576746049 | 1.5886497657 | 1.6497503595 | 1.5083676209
+1.3112040047 | 1.1154332998 | 1.1095564393 | 1.1256440277 | 1.5295580675 | 1.3316919312 | 1.5829053101 | 1.2879490886
+
+*Fig x: Change in average transaction value, by membership year*
+
+Fig x. illustrates this non-linear effect.
+
+#### Reward and difficulty
+
+I created a series of scatter plots to examine the relationship between demographic segment and transaction rate / value by reward and difficulty.
+
+![placeholder_1](https://ismith1024.github.io/images/dif_tr_age.png)
+
+![placeholder_1](https://ismith1024.github.io/images/rt_tr_age.png)
+
+*Fig x: Reward by age; and difficulty by income; change in transaction rate*
+
+Younger and lower-income customers increased transaction rate, but independently of reward and difficuly. There was no noticeable transaction value trend correltated to either income or age.
 
 
 ## Refinement 
