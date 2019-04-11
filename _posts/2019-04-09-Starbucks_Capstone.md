@@ -7,29 +7,29 @@ title: Starbucks Capstone Challenge
 
 ## Project Overview
 
-With mobile applications well into maturity as a platform, by 2019, businesses with large installed user bases can consider historic transaction records as a free source of very in-depth market research.  This allows the business to precisely identify customer segmetns, and analyze each demographic segment's preferred interactions with the business,  Thie will allow the business to offer the user an improved and custom-tailored purchasing experience, increasing customer satisfaction, and will also allow the business to sell more product as a result.
+With mobile applications well into maturity as a platform, by 2019, businesses with large installed user bases can consider historic transaction records as a free source of very in-depth market research.  This allows the business to precisely identify customer segments, and analyze each demographic segment's preferred interactions with the business.  This will allow the business to offer the user an improved and custom-tailored purchasing experience, increasing customer satisfaction, and will also allow the business to sell more product as a result.
 
-The project represents a simulation of the bahavior users of Starbucks' mobile app over a period of time in which users are sent promotional offers.  The promotional offers fall into one of three types: buy-one-get-one-free ('BOGO'), informational, and discount.  The parameters of each offer vary (some are valid for longer than others, some provide a greater reward), and the offers are made by way of different marketing channels – some combination of web, mobile, social, and email.  However, there are only ten variations of these offers in total.
+The project represents a simulation of the behavior users of Starbucks' mobile app over a period of time in which users are sent promotional offers.  The promotional offers fall into one of three types: buy-one-get-one-free ('BOGO'), informational, and discount.  The parameters of each offer vary (some are valid for longer than others, some provide a greater reward), and the offers are made by way of different marketing channels – some combination of web, mobile, social, and email.  However, there are only ten variations of these offers in total.
 
-The possible objectives of the exercise is quite open-ended.  My implementation is based on a high-level observation of the data and business doman (marketing):
+The possible objectives of the exercise are quite open-ended.  My implementation is based on a high-level observation of the data and business domain (marketing):
 
-- Although two events occur in sequence, it is not possible to claim that they are dependent on each other (no causality).  A customer might but the same latte every mornging, regardless of whether he or she was given a BOGO offer by email
-- The outcome of an offer is not repeatable (no determinism).  A customer might get the same discount on two separate days, but just not feel like a coffee on one of those days.
+- Although two events occur in sequence, it is not possible to claim that they are dependent on each other (no causality).  A customer might buy the same latte every morning, regardless of whether he or she was given a BOGO offer by email.
+- The outcome of an offer is not repeatable (no determinism).  A customer might get the same discount on two separate days, but might just not feel like having a coffee on one of those days.
 - For this reason, there is no cause-and-effect relationship (causal determinism).  This point might be lost on someone approaching the data science domain from a software background, for example, where the same SELECT clause had better give the same result each time.
 
 #### Problem Statement
 
-My implmentation of this project is oriented towards describing and predicting human behavior on an aggregate level.  The project can be summarized by one key question:
+My implementation of this project is oriented towards describing and predicting human behavior on an aggregate level.  The project can be summarized by one key question:
 
-*Given a user with some demographics, who is provided with an offer with some parameters, what is the user's expected change in behavior, expressed as the product of transaction rate times average transaction value)?*
+*Given a user with some demographics, who is provided with an offer with some parameters, what is the user's expected change in behavior, expressed as the product of transaction rate times average transaction value?*
 
 I will be approaching this exercise as though I were consulting for a marketing team, and providing quantifiable information which can be used by those with financial information (product pricing, for example) to render a business decision.
 
 #### Metrics
 
-I have found that both changes can be described fairly well, and predicted to some degree.  My proposed strategy is to anaylze the data two ways – descriptive statistics, to give the imaginary marketing team a set of heuristic rules for targeting customers, and a regression learner, which can predict a user's response to the propsed campaign.  
+I have found that changes in both transaction volume and value can be described fairly well, and predicted to some degree.  My proposed strategy is to anaylze the data two ways – descriptive statistics, to give the imaginary marketing team a set of heuristic rules for targeting customers, and a regression learner, which can predict a user's response to the propsed campaign.  
 
-The performance metrics – MSE and R^2 are used to find the best learner.  Heuristics are tricky to quantify, but they will be based on values found in the statistical analysis that are intuitively noteworthy.
+The performance metrics – MSE and R-squared are used to find the best learner.  Heuristics are tricky to quantify, but they will be based on values found in the statistical analysis that are intuitively noteworthy.
 
 ## Data Exploration and Visualization
 
@@ -65,7 +65,7 @@ The data set is deceptively simple.  It contains three JSON files with a minimal
 
 *Fig 1: Raw user age data*
 
-... unknown age is encoded as 118 years old
+... Fig 1 shows that unknown age is encoded as 118 years old, and there are many of these users!
 
 **Gender**
 
@@ -75,25 +75,25 @@ The data set is deceptively simple.  It contains three JSON files with a minimal
 
 *Fig 2: Raw gender data*
 
-... gender contains null values, in addition any user who does not identify as male or female is tagged as "other".
+... Fig 2 shows how gender contains null values.  Note also that any user who does not identify as male or female is tagged as "other".
 
 **Income**
 
 ![placeholder_1](https://ismith1024.github.io/images/income_raw.png)
 
-*Fig x: Raw user income data*
+*Fig 3: Raw user income data*
 
-... income contains null values.
+... Fig 3 shows how income contains null values.
 
-I evaluated these missing data points both by way of imputing missing values, and by removing missing data from the experiment.  I found the machine learning performance was better with the removed data, but not by much.  And for the purposes of statistical significance, with a sample size of 17000, removing even thousands of records did not move the needle.
+I evaluated these missing data points both by way of imputing missing values, and by removing missing data from the experiment.  I found the machine learning performance was better with the imputed data.  As for the purposes of statistical significance, with a sample size of 17000, removing even thousands of records did show any detrimental effects.
 
 #### Portfolio.json
 
-Portfolio is a straightforward record of all ten offers, contianing a hex id string, list of channels, difficulty, duration, reward, and offer type (one of 'bogo', 'informational', or 'discount')
+Portfolio.json is a straightforward record of all ten offers, contianing a hex id string, list of channels, difficulty, duration, reward, and offer type (one of 'bogo', 'informational', or 'discount')
 
 #### Transcript.json
 
-Transcript contains the time series data for all events - offer received, offer viewed, transaction, and offer completed.  The JSON objects did not lend themselves to creating a dataframe directly as not every event had the same characteristics. I built a series of functions to inspect a JSON object and place the relevant characteristics in a suitable column (for exampl, 'transaction amount').  Columns with no applicable value were encoded as -1.
+Transcript.json contains the time series data for all events - offer received, offer viewed, transaction, and offer completed.  The JSON objects did not lend themselves to creating a dataframe directly as not every event had the same characteristics. I built a series of functions to inspect a JSON object and place the relevant characteristics in a suitable column (for example, 'transaction amount').  Columns with no applicable value were encoded as -1.
 
 ```
 def get_offer_id(entry):
@@ -137,38 +137,37 @@ It is worthwhile to ask whether any demographics are strongly correlated.  This 
 
 ![placeholder_1](https://ismith1024.github.io/images/myear_age.png)
 
-*Fig 3: Membership_year-age, gradient scatter plot with histograms*
+*Fig 4: Membership_year-age, gradient scatter plot with histograms*
 
-Figure 3 shows that a majority of users are recently signed up to the app, and the mean value of around 53 holds in general for all lengths of membership.
+Figure 4 shows that a majority of users are recently signed up to the app, and the mean value of around 53 holds in general for all lengths of membership.
 
 **Age vs Income**
 
 ![placeholder_1](https://ismith1024.github.io/images/inc_age.png)
 
-*Fig 4: Income-age, gradient scatter plot with histograms*
+*Fig 5: Income-age, gradient scatter plot with histograms*
 
-Figure 4 is interesting as it illustrates an artifact from the synthetic data.  It appears that three distributions, one with income up to 75k and all ages, one with income 50K to 105k and ages 37+, and one with income 70k to 120k and ages 50+ were generated and then merged.  This would explain the square features in the lower left corners of the highest density color gradient.
+Figure 5 is interesting as it illustrates an artifact from the synthetic data.  It appears that three distributions, one with income up to 75k and all ages, one with income 50K to 105k and ages 37+, and one with income 70k to 120k and ages 50+ were generated and then merged.  This would explain the square features in the lower left corners of the highest density color gradient.
 
-Ignoring the artifacts from the synthestic data, it appears that the intention was to have a somewhat linear dependnect between age and income, this can be seen form the color gradient.
+Ignoring the artifacts from the synthetic data, it appears that the intention was to have a somewhat linear dependency between age and income.  This can be seen from the color gradient.
 
 
 **Gender vs Income**
 
 ![placeholder_1](https://ismith1024.github.io/images/inc_gend.png)
 
-*Fig 5: Income-age, violin plot*
+*Fig 6: Income-age, violin plot*
 
-Males have a clearly lower income distribution than Females and Others.  There are many more Females represented in the top 25% of incomes.  The next 25% is disporportionatley Female and Other, the next 25% is where most of the Others and Males are.  The lowest quartile of income contains a Male majority.
+Males have a clearly lower income distribution than Females and Others.  There are many more Females represented in the top 25% of incomes.  The next 25% is disproportionatley Female and Other, the next 25% is where most of the Others and Males are.  The lowest quartile of income contains a Male majority.
 
 Lower income Males, higher income Females, and mid income Others gravitate to the Starbucks app (in this simulation anyway).
 
-In conclusion, there does not appear to be a need at this time to throw out any data series, but the dependency on gender and age with respect to income should be considered when making a final interpretation of any findings.
-
+In summary, there does not appear to be a need at this time to throw out any data series, but the dependency on gender and age with respect to income should be considered when making a final interpretation of any findings.
 
 
 ## Methodology
 
-The overall objective of the project is to simulate a data science exercise in which the customer (Starbucks Web Marketing Team) is provided with a model to predict changes in customer behavior when provided with a propmotional offer. This will be measured by:
+The overall objective of the project is to simulate a data science exercise in which the customer (Starbucks Marketing Team) is provided with a model to predict changes in customer behavior when provided with a propmotional offer. This will be measured by:
 
  - Given a user, with specific demographics,
  - And given an offer, with specific parameters,
@@ -189,37 +188,24 @@ A significant amount of data-wrangling work was necessary to transform the trans
 
 This required me to determine what offers each user had received, what is their duration, and what intervals of the experiment did not fall within any offer period. Once the offer periods and no-offer periods were determined, transactions and their values were used to evaluate trnasaction rates and values by offer or no-offer interval.
 
-The profile data is missing significant sections of demographic data, and I have evaluated the impact of imputing missing values vs. omitting incomplete records.  The regression learner performed better when missing values were omitted.
+The profile data is missing significant sections of demographic data, and I have evaluated the impact of imputing missing values vs. omitting incomplete records.  The regression learner performed better when missing values were imputed.
 
 I parsed the date string into a datetime object to enable processing.
 
-As described previously, the Transcript file required a series of functions to be applied to the rows in oirder ot manipulate its values into a table with the following structure: 
-
-As it turned out, the offers were all received within one of seven time slots:
-
-![placeholder_1](https://ismith1024.github.io/images/offer_periods.png)
-*Fig 6a: Offers Recevied Time Slots*
-
-![placeholder_1](https://ismith1024.github.io/images/transaction_times.png)
-
-*Fig 6b: All transaction times*
-
-Figure 6b illustrates two phonomena.  The first is the aggregate customer response to the seven offer periods - it takes the form of an impulse response (with exponential decay), as opposed to a step response, with a logistic transition from one steady state to another.  The second phenomenon is that the last four offer periods are compressed in time and overlap each other -- the business driven by offer *k* has not declined back to its baseline state by the time that offer *k + 1* is made.
-
 #### Transaction Record Preprocessing
 
-A central part of the analysis is the concept of an offer interval.  For each user, I want to know: 
+A central part of the analysis is the concept of an offer interval.  For each user, I want to determine: 
  - When an offer is made, how many transactions take place over the duration of the offer? 
  - What is the value of these offers?
  - How often does the user make transactions when no offer is in efffect?
  - What is the value of these offers?
 
 By segmenting the offers, I was able to establish an A and B case for each user, and by aggregating, for each demographic segment.  I built the transaction records as follows:
- - For each user, inspect the transcript to determine the number of each offer made.  (Some users are given the same offer morethan once).
+ - For each user, inspect the transcript to determine the number of each offer made.  (Some users are given the same offer more than once).
  - Build a dictionary of Offer: [(Time, Value)]
  - For each Offer type given to the user, inspect the transcript.  Record all transactions made between the offer time and (the offer time plus the offer duration) in that offer's dictionary.  This may need to be repeated for each instrance of a single offer.
  - For each transaction made by that user that is not in one of the offer periods, record the (time, value) in a no_offer_transactions.
- - The average transaction value ('B' case) for a given offer type to a given user is the average of all Value records in that offer type's dict entry
+ - The average transaction value ('B' case) for a given offer type to a given user is the average of all Value records in that offer type's dictionary entry
  - The transaction rate for a given offer type ('B' case) is determined using the offer duration, the number of times the offer is made to the user, and the number of transactions made during that offer type's intervals by that user
  - The baseline transaction rate ('A' case) is calculated as follows:
    - Process all offer intervals given to that user using a MERGE_INTERVALS algorithm
@@ -227,15 +213,27 @@ By segmenting the offers, I was able to establish an A and B case for each user,
    - Subtract from the total length of the experiment
    - Divide the number of no-offer transactions by the above time
 
+As it turned out, the offers were all received within one of six time slots:
+
+![placeholder_1](https://ismith1024.github.io/images/offer_periods.png)
+
+*Fig 7a: Offers Recevied Time Slots*
+
+![placeholder_1](https://ismith1024.github.io/images/transaction_times.png)
+
+*Fig 7b: All transaction times*
+
+Figure 7b illustrates two phenomena.  The first is the customer response to the six offer periods - it takes the form of an impulse response (with exponential decay), as opposed to a step response, with a logistic transition from one steady state to another.  The second phenomenon is that the last three offer periods are compressed in time and overlap each other -- the business driven by offer *k* has not declined back to its baseline state by the time that offer *k + 1* is made.
+
 ## Implementation
 
-I segmented each user demographic into groups which would make sense to the Starbucks marketing team (for example, "users aged 20-30", users with income 50k-60k", "Female users"). For each user demographic, I generated a histogram showing the distribution of change in transaction rate and value, as well as recording their mean values in a master table.
+I segmented each user demographic into groups which would make sense to the Starbucks marketing team (for example, "users aged 20-30", "users with income 50k-60k", "Female users"). For each user demographic, I generated a histogram showing the distribution of change in transaction rate and value, as well as recording their mean values in a master table.
 
 These mean values, as well as demographic data and offer parameters, we used to train a Linear Regression learner.
 
 ### Statistics
 
-I segemnted each demographic, into logical bins, and then determined the transaction rate and value for each offer.  Next, I determined the transaction rate and average vlaue for periods where no offer was valid for the same set of customers.  These two interval periods became my A and B groups.  I plottted a series of historgrams, and colected the A/B ratios in a matrix.
+I segmented each demographic into logical bins, and then determined the transaction rate and value for each offer.  Next, I determined the transaction rate and average value for periods where no offer was valid for the same set of customers.  These two interval periods became my A and B groups.  I plottted a series of historgrams, and colected the A/B ratios in a matrix.
 
 ![placeholder_1](https://ismith1024.github.io/images/bogo_all_user.png)
 
@@ -245,7 +243,7 @@ I segemnted each demographic, into logical bins, and then determined the transac
 |`BOGO 4 mean: 0.006058094776529127`|
 |`No offer mean: 0.005528949447740996`|
 
-*Fig 7: Example histogram - BOGO response, Transaction Rate, All Users*
+*Fig 8: Example histogram - BOGO response, Transaction Rate, All Users*
 
 The table of findings is too long to be placed inline, but see the appendix to this post for full details.  Notable heuristics are described as follows:
 
@@ -287,14 +285,14 @@ Male users increased transaction frequency as a result of BOGO and discount offe
 |`Avg Transaction Value, M, bogo_4: 9.863846278041088`|
 |`Avg Transaction Value, M, no offer: 7.4150608793248445`|
 
-*Fig 9: Male-Female discrepancy, average transaction values*
+*Fig 10: Male-Female discrepancy, average transaction values*
 
 
 A slight decrease in transaction rate was recorded for Females as a result of Discount offers, compared to a slight increase for Males and Others. Discounts increased average transaction value significantly more for Females and Others than Males.
 
 #### Age
 
-The youngest users, those aged 18-30, were the most responive to bogo and discount in general.  BOGO offers are shown here to demonstrate this.
+The youngest users, those aged 18-30, were the most responive to BOGO and discount in general.  BOGO offers are shown here to demonstrate this.
 
 ![placeholder_1](https://ismith1024.github.io/images/bogo_tr_age20.png)
 
@@ -312,10 +310,10 @@ The youngest users, those aged 18-30, were the most responive to bogo and discou
 |`Transaction Rate, age 70 - 80, bogo_4: 0.005289071284746735`|
 |`Transaction Rate, age = 70 - 80, no offer: 0.005036440433212479`|
 
-*Fig 10: Average transaction values - Variation by Age*
+*Fig 11: Average transaction values - Variation by Age*
 
 #### Income
-The lowest income customers had the highest response to discount and BOGO offers in terms of transaction volume.  I have illustrated this with discount offers.
+The lowest-income customers had the highest response to discount and BOGO offers in terms of transaction volume.  I have illustrated this with discount offers.
 
 ![placeholder_1](https://ismith1024.github.io/images/inc20_disc_tr.png)
 
@@ -333,12 +331,12 @@ The lowest income customers had the highest response to discount and BOGO offers
 |`Transaction rate, income $80000 - $90000, discount_4: 0.003610782193657642`|
 |`Transaction rate, Income = $80000 - $90000, no offer: 0.004310092463914752`|
 
-*Fig 11: Average transaction values - Variation by Age*
+*Fig 12: Average transaction values - Variation by Age*
 
 
 #### Membership date
 
-A non-linear trend was apparent which depended on the data a member joined.  The newest and oldest memberships (those joining in 2013 or 2018) showed the least responsiveness to offers in terms of average transaction value.  The custoemrs who spent the most in response to an offer were those who joined in 2015-2016.
+A non-linear trend was apparent which depended on the date a member joined.  The newest and oldest memberships (those joining in 2013 or 2018) showed the least responsiveness to offers in terms of average transaction value.  The custoemrs who spent the most in response to an offer were those who joined in 2015-2016.
 
  Membership Date | bogo_1  | bogo_2  | bogo_3  | bogo_4 | discount_1  | discount_2  | discount_3  | discount_4
 ---|---|---|---|---|---|---|---|---
@@ -349,21 +347,21 @@ A non-linear trend was apparent which depended on the data a member joined.  The
 2017|1.4646361715 | 1.3936461882 | 1.3511012608 | 1.4652818338 | 1.576746049 | 1.5886497657 | 1.6497503595 | 1.5083676209
 2018|1.3112040047 | 1.1154332998 | 1.1095564393 | 1.1256440277 | 1.5295580675 | 1.3316919312 | 1.5829053101 | 1.2879490886
 
-*Fig 12: Change in average transaction value, by membership year*
+*Fig 13: Change in average transaction value, by membership year*
 
-Fig 12. illustrates this non-linear effect.
+Fig 13. illustrates this non-linear effect.
 
 #### Reward and difficulty
 
-I created a series of scatter plots to examine the relationship between demographic segment and transaction rate / value by reward and difficulty.
+I created a series of scatter plots to examine the relationship between demographic segment and transaction rate or value by reward and difficulty.
 
 ![placeholder_1](https://ismith1024.github.io/images/dif_tr_age.png)
 
 ![placeholder_1](https://ismith1024.github.io/images/rt_tr_age.png)
 
-*Fig 13: Reward by age; and difficulty by income; change in transaction rate*
+*Fig 14: Reward by age; and difficulty by income; change in transaction rate*
 
-Younger and lower-income customers increased transaction rate, but independently of reward and difficuly. There was no noticeable transaction value trend correltated to either income or age.
+Younger and lower-income customers increased transaction rate, but independently of reward and difficuly. There was no noticeable transaction value trend correlated to either income or age.
 
 
 ### Refinement 
@@ -375,11 +373,11 @@ I built a dataframe which essenially consisted of augmented X and y matrices:
 
 First, I ran the raw data through a linear regressor, mostly to establish a baseline and determine the correct workflow and syntax.  Next, I scaled and normalized the data for each user demographic.  The results were, predicatbly, a great imrpovement.
 
-I evaluated both RandomForestRegressor and AdaboostRegressor learners, but the LinearRegression model perofrmend the best.
+I evaluated both RandomForestRegressor and AdaboostRegressor learners, but the LinearRegression model performed the best.
 
-After establishing the regression algorithm, I added offer reward, offer difficulty, and then offer channels to the dataframe.  None of these columns had a material effect on the performance of the regressoon model, which suggests to me that the inofrmation contained in these data fields does not contribute information to the system.
+After establishing the regression algorithm, I added offer reward, offer difficulty, and then offer channels one at a time to the dataframe.  None of these columns had a material effect on the performance of the regression model, which suggests to me that the inofrmation contained in these data fields does not contribute information to the system.
 
-Finally, I observed that membership year has a non-linear correlation to average transaction value.  Users who joined in 2015 and 2016 spent noticeably more per visit than users who jioned in 2013 and 2018.  I thought of using a non-linear statistical model, but instead one-hot encoded membership year and re-ran the regressor.  The result was in improvement in average transaction vlaue with a trade-off in perfomance of trnasaction rate.  If Starbucks were interested in using these regresors, they may wish to consider encoding membership year separately for the separate y-values.
+Finally, I observed that membership year has a non-linear correlation to average transaction value.  Users who joined in 2015 and 2016 spent noticeably more per visit than users who jioned in 2013 and 2018.  I thought of using a non-linear statistical model, but instead one-hot encoded membership year and re-ran the regressor.  The result was in improvement in average transaction value with a trade-off in perfomance of transaction rate.  If Starbucks were interested in using these regresors, they may wish to consider encoding membership year separately for the separate y-values.
 
 ## Results
 
@@ -388,15 +386,15 @@ Finally, I observed that membership year has a non-linear correlation to average
 **Heuristic Solution**
 The results of the statistical analysis are provided at the end of this post in a table, and in a data dump titled "results.csv".  The results can be sorted or filtered on offer and demographic, to produce a table of roughly ten rows that can visualize the relationship between any of the numerous dimensions of this problem.
 
-Gender - Starbucks should target marketing campaigns intended to drive larger purchases towards Female users, and high transaction volume toward Male users, since it is shown that these demographics will respond in kind.
-Income - Upper income customers spend more in general, but do not show a proprotionally higher increase in transacion values than lower earners when given an offer.  The lowest income earners are the most responsive in terms of transaction volumes when given a BOGO or discount offer.  Starbucks should bear in mind that income is correlated to both gender and age, and the any spurous correlations should be ruled out before investing too heavily on a marketing campaign.
-Age - Starbucks should direct offers to younger users, particularly those with lower income.  Both these demographics are shown to increase transaction rates when given offers.
-Membership date - Starbucks should consider that the users who have been members for the median amount of time are the most receptive to offers.  The newest and the longest-serving app users will spend the least money.
-Channel, Reward, Difficulty - There was no demonstrated change in behavior that depended on these variables.  Starbucks should review the way that these values are evaluated; difficulties are described in a subsequent section.
+ - Gender - Starbucks should target marketing campaigns intended to drive larger purchases towards Female users, and high transaction volume toward Male users, since it is shown that these demographics will respond in kind.
+ - Income - Upper income customers spend more in general, but do not show a proportionally higher increase in transaction values than lower earners when given an offer.  The lowest-income earners are the most responsive in terms of transaction volumes when given a BOGO or discount offer.  Starbucks should bear in mind that income is correlated to both gender and age, and the any spurous correlations should be ruled out before investing too heavily on a marketing campaign.
+ - Age - Starbucks should direct offers to younger users, particularly those with lower income.  Both these demographics are shown to increase transaction rates when given offers.
+ - Membership date - Starbucks should consider that the users who have been members for the median amount of time are the most receptive to offers.  The newest and the longest-serving app users will spend the least money.
+ - Channel, Reward, Difficulty - There was no demonstrated change in behavior that depended on these variables.  Starbucks should review the way that these values are evaluated; difficulties are described in a subsequent section.
 
 **Machine Learning Solution**
 
-I evaluated the predictive models using the R^2 and MSE matrics, and quantified the effects of the items previously described.
+I evaluated the predictive models using the R-squared and MSE matrics, and quantified the effects of the items previously described.
 
 Model | R^2 - Transaction Rate  | MSE - Transaction Rate | R^2 - Transaction Value | MSE - Transaction Value
 ---|---|---|---|---
@@ -411,13 +409,13 @@ Difficulty /Reward | 0.2403796150694231 | 2.2676661733016904e-05 | 0.08010667319
 Channels |  0.24282416374984062 | 2.2603685540414085e-05 |  0.08019900111557599 | 574.3038117109567
 One-hot Membership Date | 0.2290706546154977 | 2.3014263877263163e-05 |  0.08279156474044091 | 572.6850711641765
 
-*Fig 14 : Incremental learner improvement (BOGO used for illustrative purposes)
+*Fig 15 : Incremental learner improvement (BOGO used for illustrative purposes)
 
 #### Justification
 The statistical analysis shows clear, if unsystematic, cases where one demographic segment responds more favorably when given the same offer type than others.  Starbucks marketing team is able to use these values to direct future marketing campaigns.
 
 After comparing the model metrics, the Linear Regression worked best as a learner to predict user behavior.  The optimal parameters were:
- - Selection of algorithm: Linear Regression was suitablew for the task, the AdaBoost and Random Forest regressors were not.  This step represented the greatest improvmeent potential
+ - Selection of algorithm: Linear Regression was suitable for the task; the AdaBoost and Random Forest regressors were not.  This step represented the greatest improvmeent potential
  - Impute data, as opposed to dropping invalid responses.  This step represented the next most significant improvement potiential.
  - Normalize and scale values
  - Encoding difficulty and reward, and encoding channels had little effect on the quality of outcome
@@ -430,23 +428,21 @@ After comparing the model metrics, the Linear Regression worked best as a learne
 **Heuristic Solution**
 The results of the statistical analysis are straightforward conceptually, but dense in terms of volume of information.  Starbucks' marketing team is directed to the data dump in "findings.csv".
 
-Since the findings are comprehensive but at times cumbersome to navigate.  I would suggest and approach that the marketing team may wish to consider would be to open the results.csv file in a spreadsheet program and autofilter the data.  This has the advantage of making the findings accessible to a typical office team member who is not experienced with data science tools.
+Since the findings are comprehensive but at times cumbersome to navigate, I would suggest and approach that the marketing team may wish to consider would be to open the results.csv file in a spreadsheet program and autofilter the data.  This has the advantage of making the findings accessible to a typical office team member who is not experienced with data science tools.
 
 **Machine Learning Solution**
 The most significant factors in creating a regression model were the selection of algorithm and the decison on how to manage invalid data entry.
 
-Difficulty, reward, and channels had minimal impact on the results.  Starbucks should consider either omitting them from the regressor, or re-evalueating them with better rigor in a subsequent experiment.
+Difficulty, reward, and channels had minimal impact on the results.  Starbucks should consider either omitting them from the regressor, or re-evalueating them with better rigor in a subsequent run of this experiment.
 
 One-hotting the membership date improved performance for transaction vlaues and hindered performance for transaction rate.  Starbucks should consider training separate regressors using distinct membership date encoding to optimize performance if a machine learning technique is to be implemented for the purpose of predicting both transaction rate and value.
 
-The regression learning was more successful on the transaction rate than change of transaction value.  R-squared approaches 25% for the most successful transaction rate for model, and 8% for value.
-
-However, putting it in perspective, even a small improvement in predictive power is often suitable for business use.  I have seen claims that 65% accuracy on classifiers, for example, will often yield a significant business advantage.
+The regression learning was more successful on the transaction rate than change of transaction value.  R-squared approaches 25% for the most successful transaction rate for model, and 8% for value.  However, putting it in perspective, even a small improvement in predictive power is often suitable for business use.  I have seen claims that 65% accuracy on classifiers, for example, will often yield a significant business advantage.
 
 #### Opportunities for improvement
-Starbucks could improve the data set in  the following ways:
-- Run the experiment with a continuous variation of reward and difficulty.  I found that the transcript set was not informative with respect to these parameters – there were only two values for the BOGO and discount offers, this made finding a relationship between difficulty and income, for example, unreliable
-- Run the experiment with separable information.  Channel information was specifically bad.  For example, if all four offers of a type are avalable by web, it is not possible to measure the effect of web vs no web.  Similarly, if two offers are made by social with difficulty X, and two others not by social with dicciculry Y, it is not possible to attribute any difference to the channel, or the difficulty.
+Starbucks could improve the data set in the following ways:
+- Run the experiment with a continuous variation of reward and difficulty.  I found that the transcript set was not informative with respect to these parameters - there were only two values for the BOGO and discount offers, this made finding a relationship between difficulty and income, for example, unreliable
+- Run the experiment with separable information.  Channel information was specifically bad.  For example, if all four offers of a type are avalable by web, it is not possible to measure the effect of web vs no web.  Similarly, if two offers are made by social with difficulty X, and two others not by social with difficulty Y, it is not possible to attribute any difference to the channel, or the difficulty.
 
 I could improve the experiment by:
 - Considering whether the offer was opened.  I dismissed this value early on, but given more time to complete the exercise, the next thing I would have added would be a binary attribute "offer opened" to the learner.  I suspect that this would have improved the results.
