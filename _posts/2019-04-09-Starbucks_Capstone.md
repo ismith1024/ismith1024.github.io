@@ -80,6 +80,7 @@ The data set is deceptively simple.  It contains three JSON files with a minimal
 **Income**
 
 ![placeholder_1](https://ismith1024.github.io/images/income_raw.png)
+
 `Percent of users non-responsive for income: 12.794117647058824%`
 
 *Fig 3: Raw user income data*
