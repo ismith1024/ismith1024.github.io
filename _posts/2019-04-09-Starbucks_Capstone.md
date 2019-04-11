@@ -179,18 +179,40 @@ Male users increased transaction frequency as a result of BOGO and discount offe
 
 A slight decrease in transaction rate was recorded for Females as a result of Discount offers, compared to a slight increase for Males and Others. Discounts increased average transaction value significantly more for Females and Others than Males.
 
+#### Age
+
+The youngest users, those aged 18-30, were the most responive to bogo and discount in general.  BOGO offers are used here to demonstrate this.
+
+![placeholder_1](https://ismith1024.github.io/images/bogo_tr_age20.png)
+
+|`Transaction Rate, age 20 - 30, bogo_1: 0.009038701697134851`|
+|`Transaction Rate, age 20 - 30, bogo_2: 0.00961740230643825`|
+|`Transaction Rate, age 20 - 30, bogo_3: 0.007327178790994582`|
+|`Transaction Rate, age 20 - 30, bogo_4: 0.008295197356509156`|
+|`Transaction Rate, age = 20 - 30, no offer: 0.006209470670028635`|
+
+![placeholder_1](https://ismith1024.github.io/images/bogo_tr_age70.png)
+
+|`Transaction Rate, age 70 - 80, bogo_1: 0.005635994223545941`|
+|`Transaction Rate, age 70 - 80, bogo_2: 0.005855018405388468`|
+|`Transaction Rate, age 70 - 80, bogo_3: 0.004974113506250731`|
+|`Transaction Rate, age 70 - 80, bogo_4: 0.005289071284746735`|
+|`Transaction Rate, age = 70 - 80, no offer: 0.005036440433212479`|
+
+*Fig x: Average transaction values - Variation by Age*
+
 #### Membership date
 
 A non-linear trend was apparent which depended on the data a member joined.  The newest and oldest memberships (those joining in 2013 or 2018) showed the least responsiveness to offers in terms of average transaction value.  The custoemrs who spent the most in response to an offer were those who joined in 2015-2016.
 
  Membership Date | bogo_1  | bogo_2  | bogo_3  | bogo_4 | discount_1  | discount_2  | discount_3  | discount_4
----|---|---|---|---|---|---|---
-1.0289128217 | 1.3108907323 | 1.1004880489 | 1.0051803556 | 1.2970263108 | 1.3441169459 | 1.4216113414 | 1.3486408789
-1.3613533339 | 1.2131313491 | 1.3138951131 | 1.5422741782 | 1.5535381775 | 1.400929061 | 1.53353075 | 1.7482361107
-1.8607760224 | 1.789786318 | 1.9200245803 | 1.5945606834 | 1.6768473232 | 1.6013653731 | 1.7543372449 | 1.7783641652
-1.7026097382 | 1.8055138487 | 1.6188923012 | 1.6029436568 | 1.835628979 | 1.729043692 | 1.8618566462 | 1.7267409361
-1.4646361715 | 1.3936461882 | 1.3511012608 | 1.4652818338 | 1.576746049 | 1.5886497657 | 1.6497503595 | 1.5083676209
-1.3112040047 | 1.1154332998 | 1.1095564393 | 1.1256440277 | 1.5295580675 | 1.3316919312 | 1.5829053101 | 1.2879490886
+---|---|---|---|---|---|---|---|---
+2013|1.0289128217 | 1.3108907323 | 1.1004880489 | 1.0051803556 | 1.2970263108 | 1.3441169459 | 1.4216113414 | 1.3486408789
+2014|1.3613533339 | 1.2131313491 | 1.3138951131 | 1.5422741782 | 1.5535381775 | 1.400929061 | 1.53353075 | 1.7482361107
+2015|1.8607760224 | 1.789786318 | 1.9200245803 | 1.5945606834 | 1.6768473232 | 1.6013653731 | 1.7543372449 | 1.7783641652
+2016|1.7026097382 | 1.8055138487 | 1.6188923012 | 1.6029436568 | 1.835628979 | 1.729043692 | 1.8618566462 | 1.7267409361
+2017|1.4646361715 | 1.3936461882 | 1.3511012608 | 1.4652818338 | 1.576746049 | 1.5886497657 | 1.6497503595 | 1.5083676209
+2018|1.3112040047 | 1.1154332998 | 1.1095564393 | 1.1256440277 | 1.5295580675 | 1.3316919312 | 1.5829053101 | 1.2879490886
 
 *Fig x: Change in average transaction value, by membership year*
 
