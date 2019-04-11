@@ -15,20 +15,49 @@ The possible objectives of the exercise is quite open-ended.  My implementation 
 - The outcome of an offer is not repeatable (no determinism).  A customer might get the same discount on two separate days, but just not feel like a coffee on one of those days.
 - For this reason, there is no cause-and-effect relationship (causal determinism).  This point might be lost on someone approaching the data science domain from a software background, for example, where the same SELECT clause had better give the same result each time.
 
+#### Problem Statement
+
 My implmentation of this project is oriented towards describing and predicting human behavior on an aggregate level.  The project can be summarized by one key question:
 
 *Given a user with some demographics, who is provided with an offer with some parameters, what is the user's expected change in behavior, expressed as the product of transaction rate times average transaction value)?*
 
 I will be approaching this exercise as though I were consulting for a marketing team, and providing quantifiable information which can be used by those with financial information (product pricing, for example) to render a business decision.
 
-I have found that both changes can be described fairly well, and predicted to some degree.  My proposed strategy is to anaylze the data two ways – descriptive statistics, to give the imaginary marketing team a set of heuristic rules for targeting customers, and a regression learner, which can predict a user's response to the propsed campaign.  The performance metrics – MSE and R^2 are used to find the best learner.
+#### Metrics
 
-## Analysis
+I have found that both changes can be described fairly well, and predicted to some degree.  My proposed strategy is to anaylze the data two ways – descriptive statistics, to give the imaginary marketing team a set of heuristic rules for targeting customers, and a regression learner, which can predict a user's response to the propsed campaign.  
 
-The data set is deceptively simple.  It contains three JSON files with a minimal number of fields.
+The performance metrics – MSE and R^2 are used to find the best learner.  Heuristics are tricky to quantify, but they will be based on values found in the statistical analysis that are intuitively noteworthy.
 
-#### Profile
+## Data Exploration and Visualization
+
+The data set is deceptively simple.  It contains three JSON files with a minimal number of fields:
+
+**portfolio.json**
+* id (string) - offer id
+* offer_type (string) - type of offer ie BOGO, discount, informational
+* difficulty (int) - minimum required spend to complete an offer
+* reward (int) - reward given for completing an offer
+* duration (int) - time for offer to be open, in days
+* channels (list of strings)
+
+**profile.json**
+* age (int) - age of the customer 
+* became_member_on (int) - date when customer created an app account
+* gender (str) - gender of the customer (note some entries contain 'O' for other rather than M or F)
+* id (str) - customer id
+* income (float) - customer's income
+
+**transcript.json**
+* event (str) - record description (ie transaction, offer received, offer viewed, etc.)
+* person (str) - customer id
+* time (int) - time in hours since start of test. The data begins at time t=0
+* value - (dict of strings) - either an offer id or transaction amount depending on the record
+
+#### Profile.json
 "Profile" contains the information on the simulated users.  There are 17000 users in total.  A user is defined by four demographics: age, gender, income, and membership date.  Data is not necessarily complete...
+
+**Age**
 
 ![placeholder_1](https://ismith1024.github.io/images/age_raw.png)
 
@@ -36,14 +65,17 @@ The data set is deceptively simple.  It contains three JSON files with a minimal
 
 ... unknown age is encoded as 118 years old
 
+**Gender**
+
  Male  | Female  | Other  | No Response
 ---|---|---|---
  8484  | 6129  | 212  | 2175
 
 *Fig x: Raw gender data*
 
-
 ... gender contains null values, in addition any user who does not identify as male or female is tagged as "other".
+
+**Income**
 
 ![placeholder_1](https://ismith1024.github.io/images/income_raw.png)
 
@@ -53,13 +85,46 @@ The data set is deceptively simple.  It contains three JSON files with a minimal
 
 I evaluated these missing data points both by way of imputing missing values, and by removing missing data from the experiment.  I found the machine learning performance was better with the removed data, but not by much.  And for the purposes of statistical significance, with a sample size of 17000, removing even thousands of records did not move the needle.
 
-#### Portfolio
+#### Portfolio.json
 
 Portfolio is a straightforward record of all ten offers, contianing a hex id string, list of channels, difficulty, duration, reward, and offer type (one of 'bogo', 'informational', or 'discount')
 
-#### Transcript
+#### Transcript.json
 
 Transcript contains the time series data for all events - offer received, offer viewed, transaction, and offer completed.  The JSON objects did not lend themselves to creating a dataframe directly as not every event had the same characteristics. I built a series of functions to inspect a JSON object and place the relevant characteristics in a suitable column (for exampl, 'transaction amount').  Columns with no applicable value were encoded as -1.
+
+`def get_offer_id(entry):
+    '''
+    in: an event JSON object from the transcript
+    out: the id of the offer, or -1 if not there
+    '''
+    if 'offer_id' in entry:
+        return entry['offer_id']
+    elif 'offer id' in entry:
+        return entry['offer id']
+    else:
+        return -1
+    
+def get_amount(entry):
+    '''
+    in: an event JSON object from the transcript
+    out: the amount of the transaction, or -1 if not therele
+    '''
+    if 'amount' in entry:
+        return entry['amount']
+    else:
+        return -1
+    
+def get_reward(entry):
+    '''
+    in: an event JSON object from the transcript
+    out: the reward of the transaction, or -1 if not therele
+    '''
+    if 'reward' in entry:
+        return entry['reward']
+    else:
+        return -1
+`
 
 ## Methodology
 
@@ -77,9 +142,13 @@ I considered the following technical means to create this predictive model:
 
 The desired outcome is a descritpive set of heuristics on which types of offers are effective when presented to various user demograpics, and to provide a predictive model which will quantify the expected effectiveness of an offer given its type and audience.
 
-## Preprocessing
+#### Preprocessing
 
-A significant amount of data-wrangling work was necessary to transform the transcript time-series data into a table of the form | User Demographics | Offer Parameters | Change in Transaction Rate | Change in Average Transaction Value|. This required me to determine what offers each user had received, what is their duration, and what intervals of the experiment did not fall within any offer period. Once the offer periods and no-offer periods were determined, transactions and their values were used to evaluate trnasaction rates and values by offer or no-offer interval.
+A significant amount of data-wrangling work was necessary to transform the transcript time-series data into a table of the form 
+
+| User Demographics | Offer Parameters | Change in Transaction Rate | Change in Average Transaction Value|
+
+This required me to determine what offers each user had received, what is their duration, and what intervals of the experiment did not fall within any offer period. Once the offer periods and no-offer periods were determined, transactions and their values were used to evaluate trnasaction rates and values by offer or no-offer interval.
 
 The profile data is missing significant sections of demographic data, and I have evaluated the impact of imputing missing values vs. omitting incomplete records.  The regression learner performed better when missing values were omitted.
 
@@ -132,7 +201,7 @@ I segmented each user demographic into groups which would make sense to the Star
 
 These mean values, as well as demographic data and offer parameters, we used to train a Linear Regression learner.
 
-## Statistics
+### Statistics
 
 I segemnted each demographic, into logical bins, and then determined the transaction rate and value for each offer.  Next, I determined the transaction rate and average vlaue for periods where no offer was valid for the same set of customers.  These two interval periods became my A and B groups.  I plottted a series of historgrams, and colected the A/B ratios in a matrix.
 
@@ -243,7 +312,7 @@ I created a series of scatter plots to examine the relationship between demograp
 Younger and lower-income customers increased transaction rate, but independently of reward and difficuly. There was no noticeable transaction value trend correltated to either income or age.
 
 
-## Refinement 
+### Refinement 
 
 I implemented the regression learner incrementally, watching for performance after each change.
 I built a dataframe which essenially consisted of augmented X and y matries:
@@ -260,28 +329,32 @@ Finally, I observed that membership year has a non-linear correlation to average
 
 ## Results
 
-## Model evaluation and Validation
+#### Model evaluation and Validation
 
 I evaluated the predictive models using the R^2 and MSE matrics, and quantified the effects of the items previously described.
 
-Model | R^2 - Transaction Rate | R^2 - Transaction Value | MSE - Transaction Rate | MSE - Transaction Value
+Model | R^2 - Transaction Rate  | MSE - Transaction Rate | R^2 - Transaction Value | MSE - Transaction Value
 ---|---|---|---|---
-LinearRegressor | 0.2144105603152586 | 2.3226821404539195e-05 | 0.06405297615851169 | 600.566649797936
+LinearRegressor| 0.2144105603152586 | 2.3226821404539195e-05 | 0.06405297615851169 | 600.566649797936
 RandomForestRegressor |  -0.01370380978036745 | 277.2203874089114 | -1.652772833721584 | 725.4611313253996
 AdaboostRegressor | -0.47567024202882435 | 0.00011169151421061815 | -0.5928741397840689 | 435.6077010505166
 ---|---|---|---|---
-Base data | 0.2144105603152586 | 2.3226821404539195e-05 | 0.06405297615851169 | 600.566649797936
+Base data, imputed| 0.2403796150694231 | 2.2676661733016904e-05 |  0.08010667319942033 | 574.3614592610678
+Base data, drop invalid| 0.2144105603152586 | 2.3226821404539195e-05 | 0.06405297615851169 | 600.566649797936
 Normalize and Scale | 0.22456009941745458 | 2.292673904579504e-05 | 0.0656705873206585 | 599.5286815245406
 Difficulty /Reward | 0.232912984953061 | 2.267977673858029e-05 | 0.06547205720920046 | 599.6560718157485
 Channels |  0.2366931190695445 | 2.256801288894911e-05 |  0.06528463587337097 | 599.7763339682983
 One-hot Membership Date | 0.22745939702428727 | 2.2841018102627152e-05 |  0.06755972535745014 | 598.3164833200897
 
 
-## Justification
+#### Justification
+The final results are discussed in detail.  Exploration as to why some techniques worked better than others, or how improvements were made are documented.
 
 ## Conclusion
 
-### Opportunities for improvement
+#### Reflection
+
+#### Opportunities for improvement
 Starbucks could improve the data set in  the following ways:
 - Run the experiment with a continuous variation of reward and difficulty.  I found that the transcript set was not informative with respect to these parameters – there were only two values for the BOGO and discount offers, this made finding a relationship between difficulty and income, for example, unreliable
 - Run the experiment with separable information.  Channel information was specifically bad.  For example, if all four offers of a type are avalable by web, it is not possible to measure the effect of web vs no web.  Similarly, if two offers are made by social with difficulty X, and two others not by social with dicciculry Y, it is not possible to attribute any difference to the channel, or the difficulty.
