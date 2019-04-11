@@ -16,10 +16,8 @@ The possible objectives of the exercise is quite open-ended.  My implementation 
 - For this reason, there is no cause-and-effect relationship (causal determinism).  This point might be lost on someone approaching the data science domain from a software background, for example, where the same SELECT clause had better give the same result each time.
 
 My implmentation of this project is oriented towards describing and predicting human behavior on an aggregate level.  The project can be summarized by one key question:
-- Given some customer demographic,
-- And given some offer parameters,
-- What is the change of that demographic's number of transactions (over the offer period, relative to no offer)?
-- And what is the change in the average transaction value?
+
+*Given a user with some demographics, who is provided with an offer with some parameters, what is the user's expected change in behavior, expressed as the product of transaction rate times average transaction value)?*
 
 I will be approaching this exercise as though I were consulting for a marketing team, and providing quantifiable information which can be used by those with financial information (product pricing, for example) to render a business decision.
 
@@ -64,6 +62,20 @@ Portfolio is a straightforward record of all ten offers, contianing a hex id str
 Transcript contains the time series data for all events - offer received, offer viewed, transaction, and offer completed.  The JSON objects did not lend themselves to creating a dataframe directly as not every event had the same characteristics. I built a series of functions to inspect a JSON object and place the relevant characteristics in a suitable column (for exampl, 'transaction amount').  Columns with no applicable value were encoded as -1.
 
 ## Methodology
+
+The overall objective of the project is to simulate a data science exercise in which the customer (Starbucks Web Marketing Team) is provided with a model to predict changes in customer behavior when provided with a propmotional offer. This will be measured by:
+
+ - Given a user, with specific demographics,
+ - And given an offer, with specific parameters,
+ - What is the predicted change in the user's transaction rate before and after receiving the offer?
+ - And what is the predicted change in the user's average transaction value over the duration of the offer period?
+
+I considered the following technical means to create this predictive model:
+ - Bayesian Statistics
+ - Traditional Statistics
+ - Regression Learning
+
+The desired outcome is a descritpive set of heuristics on which types of offers are effective when presented to various user demograpics, and to provide a predictive model which will quantify the expected effectiveness of an offer given its type and audience.
 
 ## Preprocessing
 
@@ -234,7 +246,9 @@ Younger and lower-income customers increased transaction rate, but independently
 ## Refinement 
 
 I implemented the regression learner incrementally, watching for performance after each change.
-I built a dataframe contianing | User demographics | Offer Parameters | Average Value Change | Transaction Rate Change |
+I built a dataframe which essenially consisted of augmented X and y matries:
+
+ | X_user_demographics | X_offer_parameters | y_Average_Value_Change | y_Transaction_Rate_Change |
 
 First, I ran the raw data through a linear regressor, mostly to establish a baseline and determine the correct workflow and syntax.  Next, I scaled and normalized the data for each user demographic.  The results were, predicatbly, a great imrpovement.
 
@@ -242,15 +256,25 @@ I evaluated both RandomForestRegressor and AdaboostRegressor learners, but the L
 
 After establishing the regression algorithm, I added offer reward, offer difficulty, and then offer channels to the dataframe.  None of these columns had a material effect on the performance of the regressoon model, which suggests to me that the inofrmation contained in these data fields does not contribute information to the system.
 
-Finally, I observed that membership year has a non-linear correlation to average transaction value.  Users who joined in 2015 and 2016 spent noticeably more per visit than users who jioned in 2013 and 2018.  I thought of using a non-linear statistical model, but instead one-hot encoded membership year and re-ran the regressor.  The result was in improvement in average transaction vlaue with a trade-off in perfomance of trnasaction rate.  If Starbucks were interested in using htiese regresors, they may wish to consider encoding membership year separately for the separate y-values.
-
-
-
+Finally, I observed that membership year has a non-linear correlation to average transaction value.  Users who joined in 2015 and 2016 spent noticeably more per visit than users who jioned in 2013 and 2018.  I thought of using a non-linear statistical model, but instead one-hot encoded membership year and re-ran the regressor.  The result was in improvement in average transaction vlaue with a trade-off in perfomance of trnasaction rate.  If Starbucks were interested in using these regresors, they may wish to consider encoding membership year separately for the separate y-values.
 
 ## Results
 
 ## Model evaluation and Validation
 
+I evaluated the predictive models using the R^2 and MSE matrics, and quantified the effects of the items previously described.
+
+Model | R^2 - Transaction Rate | R^2 - Transaction Value | MSE - Transaction Rate | MSE - Transaction Value
+---|---|---|---|---
+LinearRegressor | 0.2144105603152586 | 2.3226821404539195e-05 | 0.06405297615851169 | 600.566649797936
+RandomForestRegressor |  -0.01370380978036745 | 277.2203874089114 | -1.652772833721584 | 725.4611313253996
+AdaboostRegressor | -0.47567024202882435 | 0.00011169151421061815 | -0.5928741397840689 | 435.6077010505166
+---|---|---|---|---
+Base data | 0.2144105603152586 | 2.3226821404539195e-05 | 0.06405297615851169 | 600.566649797936
+Normalize and Scale | 0.22456009941745458 | 2.292673904579504e-05 | 0.0656705873206585 | 599.5286815245406
+Difficulty /Reward | 0.232912984953061 | 2.267977673858029e-05 | 0.06547205720920046 | 599.6560718157485
+Channels |  0.2366931190695445 | 2.256801288894911e-05 |  0.06528463587337097 | 599.7763339682983
+One-hot Membership Date | 0.22745939702428727 | 2.2841018102627152e-05 |  0.06755972535745014 | 598.3164833200897
 
 
 ## Justification
