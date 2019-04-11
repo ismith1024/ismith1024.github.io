@@ -449,6 +449,7 @@ Starbucks could improve the data set in the following ways:
 I could improve the experiment by:
 - Considering whether the offer was opened.  I dismissed this value early on, but given more time to complete the exercise, the next thing I would have added would be a binary attribute "offer opened" to the learner.  I suspect that this would have improved the results.
 - Revisting the non-responsive data.  I could have created a binary variable which flags non-responsive users for age, income, or gender.  The possible improvement on the regression learner is unknown.
+
 ∎
 
 ![placeholder_1](https://ismith1024.github.io/images/xkcd.png)
