@@ -7,6 +7,8 @@ title: Starbucks Capstone Challenge
 
 ## Project Overview
 
+With mobile applications well into maturity as a platform, by 2019, businesses with large installed user bases can consider historic transaction records as a free source of very in-depth market research.  This allows the business to precisely identify customer segmetns, and analyze each demographic segment's preferred interactions with the business,  Thie will allow the business to offer the user an improved and custom-tailored purchasing experience, increasing customer satisfaction, and will also allow the business to sell more product as a result.
+
 The project represents a simulation of the bahavior users of Starbucks' mobile app over a period of time in which users are sent promotional offers.  The promotional offers fall into one of three types: buy-one-get-one-free ('BOGO'), informational, and discount.  The parameters of each offer vary (some are valid for longer than others, some provide a greater reward), and the offers are made by way of different marketing channels – some combination of web, mobile, social, and email.  However, there are only ten variations of these offers in total.
 
 The possible objectives of the exercise is quite open-ended.  My implementation is based on a high-level observation of the data and business doman (marketing):
@@ -93,7 +95,8 @@ Portfolio is a straightforward record of all ten offers, contianing a hex id str
 
 Transcript contains the time series data for all events - offer received, offer viewed, transaction, and offer completed.  The JSON objects did not lend themselves to creating a dataframe directly as not every event had the same characteristics. I built a series of functions to inspect a JSON object and place the relevant characteristics in a suitable column (for exampl, 'transaction amount').  Columns with no applicable value were encoded as -1.
 
-`def get_offer_id(entry):
+```
+def get_offer_id(entry):
     '''
     in: an event JSON object from the transcript
     out: the id of the offer, or -1 if not there
@@ -124,7 +127,44 @@ def get_reward(entry):
         return entry['reward']
     else:
         return -1
-`
+```
+
+#### Relationship between demographics
+
+It is worthwhile to ask whether any demographics are strongly correlated.  This is important; for example if it were found that older users bought more BOGOs, but age were correlated with income and in fact it is higher earners who spent more money, then the finding regarding age would be spurious.
+
+**Age vs Membership Period**
+
+![placeholder_1](https://ismith1024.github.io/images/myear_age.png)
+
+*Fig x: Membership_year-age, gradient scatter plot with histograms*
+
+Figure x shows that a majority of users are recently signed up to the app, and the mean value of around 53 holds in general for all lengths of membership.
+
+**Age vs Income**
+
+![placeholder_1](https://ismith1024.github.io/images/inc_age.png)
+
+*Fig x: Income-age, gradient scatter plot with histograms*
+
+Figure x is interesting as it illustrates an artifact from the synthetic data.  It appears that three distributions, one with income up to 75k and all ages, one with income 50K to 105k and ages 37+, and one with income 70k 120k and ages 50+ were generated and then merged.  This would explain the square features in the lower left corners of the highest density color gradient.
+
+Ignoring the artifacts from the synthestic data, it appears that the intention was to have a somewhat linear dependnect between age and income, this can be seen form the color gradient.
+
+
+**Gender vs Income**
+
+![placeholder_1](https://ismith1024.github.io/images/inc_gend.png)
+
+*Fig x: Income-age, violin plot*
+
+Males have a clearly lower income distribution than Females and Others.  There are many more Females represented in the top 25% of incomes.  The next 25% is disporportionatley Female and Other, the next 25% is where most of the Others and Males are.  The lowest quartile of income contains a Male majority.
+
+Lower income Males, higher income Females, and mid income Others gravitate to the Starbucks app (in this simulation anyway).
+
+In conclusion, there does not appear to be a need at this time to throw out any data series, but the dependency on gender and age with respect to income should be considered when making a final interpretation of any findings.
+
+
 
 ## Methodology
 
